@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class AssignmentTimeline {
 	private static String currDate;
 	
 
-	public static ArrayList<String> minHeapToUser(Scanner sc) {
+	public static ArrayList<String> minHeapToUser(Scanner sc) { //goes from minheap to user's schedule
 		assignmentPlotter(sc);
 		
 		ArrayList<String> result = new ArrayList<String>();
@@ -134,7 +135,7 @@ public class AssignmentTimeline {
 
 	}
 	
-	private static void findAndAdd(boolean[] b, ArrayList<String> list, String s, ArrayList<String> result) {
+	private static void findAndAdd(boolean[] b, ArrayList<String> list, String s, ArrayList<String> result) { //find and add the corresponding assignment plus date in the sorted order
 		if(s.charAt(0) == '0') {
 			s = s.substring(1);
 		}
@@ -182,6 +183,35 @@ public class AssignmentTimeline {
 			}
 		}
 	}
+	
+	private static void daysInBetween(ArrayList<String> sortedList) { //feature that will allow to see how many days left for each assignment
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		LocalDate date1 = LocalDate.parse(currDate, formatter);
+		for(int i = 0; i < sortedList.size(); i++) {
+			String listDate = sortedList.get(i).substring(returnStringIndex(sortedList.get(i), ',')+2) + "/" + currDate.substring(currDate.length()-4, currDate.length());
+			int ind = returnStringIndex(listDate, '/');
+			if(ind == 1) {
+				listDate = "0"+listDate;
+			}
+			if(listDate.length() == 9) {
+				listDate = listDate.substring(0, 3)+"0"+listDate.substring(3);
+			}
+			LocalDate date2 = LocalDate.parse(listDate, formatter);
+			long daysInBetween = ChronoUnit.DAYS.between(date1, date2);
+			String s;
+			if(daysInBetween < 0 && daysInBetween!=-1) {
+				 s = sortedList.get(i) + " - Woah, looks like this was due..." +daysInBetween*-1+" days ago!";
+			} else if(daysInBetween == -1) {
+				s = sortedList.get(i) + " - Woah, looks like this was due...one day ago!";
+			} else if(daysInBetween == 1) {
+				s = sortedList.get(i) + " - You got 1 day left it's grind time!";
+			} else {
+				 s = sortedList.get(i) + " - " + daysInBetween + " days left!";
+			}
+			
+			sortedList.set(i,  s);
+		}
+	}
 
 	
 	public static void main(String[] args) throws FileNotFoundException {
@@ -195,41 +225,35 @@ public class AssignmentTimeline {
 		String temp = currDate;
 		
 		currDate = temp.substring(5, 7)+"/"+temp.substring(8)+"/"+temp.substring(0, 4);
-//		System.out.println(currDate);
-//		
-//		Scanner date = new Scanner(System.in);
-//		
-//		System.out.println("Enter the date your semester ends(mm/dd/yyyy)");
-//		
-//		String semEnd = date.nextLine();
-//		System.out.println(semEnd);
-		
-		
-		
-	    
+
+			    
 		Scanner data = new Scanner(System.in);  // Create a Scanner object
 	    System.out.println("Enter file name");
 	    String fileName = data.nextLine();  // Read user input
 		
 		Scanner sc = new Scanner(new File(fileName));
 				
-		ArrayList<String> great = minHeapToUser(sc);
-		if(great.size() == 0) {
+		ArrayList<String> finalList = minHeapToUser(sc);
+		
+		
+		if(finalList.size() == 0) {
 			System.out.println("No input");
 		} else {
-			if(great.size() < 10) {
+			if(finalList.size() < 10) {
 				System.out.println("If all your assignments don't suck, and your semester isn't ending soon, it doesn't look too bad: ");
-			} else if(great.size() > 10 && great.size() < 40) {
+			} else if(finalList.size() > 10 && finalList.size() < 40) {
 				System.out.println("Well, it doesn't look easy but it could be worse(unless of course your semester ends tomorrow. if it does yikes) : ");
 			} else {
 				System.out.println("Yeah...you got to grind. Here's your assignments: ");
 			}
 		}
 		
+		daysInBetween(finalList);
 		
 		
 		
-		for(String s: great) {
+		
+		for(String s: finalList) {
 			System.out.println(s);
 		}
 		
