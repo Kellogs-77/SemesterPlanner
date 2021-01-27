@@ -1,6 +1,22 @@
-Calc Project, 9/10
-Calc Quiz, 12/20
-English Paper, 9/10
-English Socratic Seminar, 10/24
-Chemistry Lab, 10/21
-History Powerpoint, 11/2
+Italian HW(discussions), 1/24
+Review Italian concepts, 1/24
+Discrete H1 due, 2/7
+Discrete H2 due, 2/21
+Discrete H3 due, 3/7
+Discrete H4 due, 4/4
+Discrete H5 due, 4/18
+Discrete H6 due, 5/2
+Discrete Q1 due, 2/1
+Discrete Q2 due, 2/8
+Discrete Q3 due, 2/15
+Discrete Q4 due, 2/22
+Discrete Q5 due, 3/1
+Discrete Q6 due, 3/8
+Discrete Q7 due, 3/29
+Discrete Q8 due, 4/5
+Discrete Q9 due, 4/12
+Discrete Q10 due, 4/19
+Discrete Q11 due, 4/26
+Discrete Q12 due, 5/3
+CogSci Exam 1 out, 3/1
+CogSci Exam 1 due, 3/7

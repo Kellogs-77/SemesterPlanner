@@ -32,6 +32,7 @@ public class AssignmentTimeline {
 		}
 		
 		
+		
 		return result;
 	}
 	public static void assignmentPlotter(Scanner sc) {
@@ -66,14 +67,18 @@ public class AssignmentTimeline {
 		
 		sort();
 		
+		
 	}
 	public static void sort() {
 		
+		
 		//build heap
 		for(int k = (maxHeap.length-2)/2; k >=0; k--) {
+			
 			siftDown(k, maxHeap.length);
+			
+
 		}
-		
 		
 		
 		//sort heap
@@ -96,9 +101,20 @@ public class AssignmentTimeline {
 			int rightChild = maxIndex + 1;
 			int kInd = Integer.parseInt(maxHeap[k].substring(0, 2));
 			int maxInd = Integer.parseInt(maxHeap[maxIndex].substring(0, 2));
+			
 			if (rightChild < n) { // there is a right child
 				int rC = Integer.parseInt(maxHeap[rightChild].substring(0, 2));
-				if(rC > maxInd) {maxIndex = rightChild; }
+				
+				if(rC > maxInd) {
+					maxIndex = rightChild; 
+					maxInd = Integer.parseInt(maxHeap[maxIndex].substring(0, 2));
+					}
+				else if(rC == maxInd) {
+					int rCDay = Integer.parseInt(maxHeap[rightChild].substring(3));
+					int maxIndDay = Integer.parseInt(maxHeap[maxIndex].substring(3));
+					if(rCDay>maxIndDay) {maxIndex = rightChild; }
+
+				}
 			}
 
 			
@@ -115,6 +131,7 @@ public class AssignmentTimeline {
 				
 				int maxIndDay = Integer.parseInt(maxHeap[maxIndex].substring(3));
 				int kIndDay = Integer.parseInt(maxHeap[k].substring(3));
+				
 
 				if(maxIndDay > kIndDay) {
 					String temp = maxHeap[maxIndex];
